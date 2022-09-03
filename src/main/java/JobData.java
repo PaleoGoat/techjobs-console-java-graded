@@ -5,10 +5,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -65,7 +62,7 @@ public class JobData {
      * with "Enterprise Holdings, Inc".
      *
      * @param column   Column that should be searched.
-     * @param value Value of teh field to search for
+     * @param value Value of the field to search for
      * @return List of all jobs matching the criteria
      */
     public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
@@ -79,7 +76,7 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -94,14 +91,30 @@ public class JobData {
      * @return      List of all jobs with at least one field containing the value
      */
     public static ArrayList<HashMap<String, String>> findByValue(String value) {
-
-        // load data, if not already loaded
         loadData();
+//        value = value.toLowerCase().trim();
+        ArrayList<HashMap<String, String>> matchingJobs = new ArrayList<>(); // make an ArrayList of HashMaps for printJobs
 
         // TODO - implement this method
-        return null;
+        for (HashMap<String,String> jobListing: allJobs) { // search all the job listings (which are each a HashMap)
+//            HashMap<String,String> aJob = job; //each hashmap is aJob
+            for (String infoLine: jobListing.values()) { // //for each key:value pair in aJob (category - location, company, etc.)
+//                String anInfoLine = infoLine.toLowerCase().trim();
+                if (infoLine.toLowerCase().contains(value)) {
+                    matchingJobs.add(jobListing); //add the whole listing to the "jobs" hashmap.
+                    break; // return after the first hit in a job listing - don't look in the same listing twice
+                }
+            }
+        }
+        return matchingJobs;
     }
 
+//            for (HashMap<String, String> listing : allJobs) { // search all the jobs
+//        if (listing.containsKey(search)) { // If a listing contains the search term ("search" (formerly "value"))
+//            matchingJobs.add(listing); //add the whole listing to the "jobs" hashmap.
+//            break; // Don't look in the same row twice
+//        }
+//    }
     /**
      * Read in data from a CSV file and store it in a list
      */

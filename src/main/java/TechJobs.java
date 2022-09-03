@@ -119,7 +119,19 @@ public class TechJobs {
 
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+        if (someJobs.size() > 0) { //if there are jobs in the query do this thing
+            for (HashMap<String,String> job: someJobs) { //think instead about creating a nested loop to loop over each HashMap. To do this, you’ll need to iterate over an ArrayList of jobs. For each job (Each job is itself a HashMap.) hashmap in the arraylist (of hashmaps) "someJobs"
+                HashMap<String,String> aJob = job; //each hashmap is aJob
+                System.out.print("\n*****\n"); //print "*****" to separate listngs
 
-        System.out.println("printJobs is not implemented yet");
+                for (Map.Entry<String, String> jobInfoPair: aJob.entrySet()) { //for each key:value pair in aJob (category - location, company, etc.)
+                    System.out.print(jobInfoPair.getKey() +": " + jobInfoPair.getValue() + "\n"); //print the key "location" etc. and value "Mordor" etc. (don't take a job in Mordor).
+                }
+                System.out.print("*****\n");//print "*****" to separate listngs
+//                break;
+            }
+        } else {
+            System.out.print("No Results"); //if no jobs in the list - print this
+        }
     }
 }
