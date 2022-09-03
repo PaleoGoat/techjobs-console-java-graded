@@ -92,10 +92,9 @@ public class JobData {
      */
     public static ArrayList<HashMap<String, String>> findByValue(String value) {
         loadData();
-//        value = value.toLowerCase().trim();
+        value = value.toLowerCase().trim();
         ArrayList<HashMap<String, String>> matchingJobs = new ArrayList<>(); // make an ArrayList of HashMaps for printJobs
 
-        // TODO - implement this method
         for (HashMap<String,String> jobListing: allJobs) { // search all the job listings (which are each a HashMap)
 //            HashMap<String,String> aJob = job; //each hashmap is aJob
             for (String infoLine: jobListing.values()) { // //for each key:value pair in aJob (category - location, company, etc.)
